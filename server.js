@@ -37,11 +37,17 @@ app.get("/products", (req, res) => {
 });
 
 // (R)EAD — get ONE product by its id
-// Example: http://localhost:5000/products/2
 app.get("/products/:id", (req, res) => {
-  
-  
+  const id = Number(req.params.id);
+  const product = products.find((p) => p.id === id);
+
+  if (!product) {
+    return res.status(404).json({ error: "Product not found" });
+  }
+
+  res.json(product);
 });
+
 
 // (C)REATE — add a brand new product
 // The frontend sends the new product's details in the request body
